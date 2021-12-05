@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MaterialIconsService} from './services/material-icons.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'GettingStarted';
+  title = 'Кэшбек Сервис';
+
+  constructor(private materialIconsService: MaterialIconsService) {
+    materialIconsService.init();
+  }
 }
