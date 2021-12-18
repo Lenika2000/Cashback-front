@@ -1,8 +1,10 @@
 export interface Client {
+  id?: number;
   login?: string;
   password?: string;
   firstName?: string;
   lastName?: string;
+  balance?: string;
 }
 
 export type Role = 'ROLE_SHOP' | 'ROLE_ADMIN' | 'ROLE_CLIENT';

@@ -1,0 +1,35 @@
+<form [formGroup]="cashbackForm" novalidate>
+  <p>Редактирование кэшбека</p>
+  <mat-icon (click)="closeDialog()" class="dialog__close-icon cursor pointer">clear</mat-icon>
+  <mat-form-field>
+    <mat-label>Название товара</mat-label>
+    <input matInput formControlName="productName" readonly>
+  </mat-form-field>
+  <label>Необходимо выплатить сумму: {{this.cashback.cashbackSum / 0.9}} pублей</label>
+  <mat-form-field style="margin: 16px 0 64px 0">
+    <mat-label>Сумма для выплаты клиенту</mat-label>
+    <input matInput formControlName="payment" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="cashbackForm.get('payment').hasError('required')">
+      Поле обязательно для заполнения
+    </mat-error>
+    <mat-error class="error-message" *ngIf="cashbackForm.get('payment').hasError('pattern')
+    && (cashbackForm.get('payment').dirty || cashbackForm.get('payment').touched)">
+      Для ввода суммы используйте только числа
+    </mat-error>
+<!--    <mat-error class="error-message" *ngIf="cashbackForm.get('payment').hasError('min')-->
+<!--    && (cashbackForm.get('payment').dirty || cashbackForm.get('payment').touched)">-->
+<!--      Сумма выплаты не может быть меньше 5% от цены товара c учетом комиссии сервиса: {{this.cashback.cashbackSum / 0.9}} рублей-->
+<!--    </mat-error>-->
+  </mat-form-field>
+  <mat-checkbox formControlName="isPaid" labelPosition='after'
+                class="dialog-checkbox">
+    Подтверждение оплаты товара клиентом
+  </mat-checkbox>
+  <mat-checkbox formControlName="isOrderCompleted" labelPosition='after'
+                class="dialog-checkbox">
+    Подтверждение отсутствия возврата товара
+  </mat-checkbox>
+  <div class="dialog__actions">
+    <button mat-button [disabled]="cashbackForm.invalid" (click)="onCashbackUpdate()" class="btn cursor pointer">Изменить</button>
+  </div>
+</form>

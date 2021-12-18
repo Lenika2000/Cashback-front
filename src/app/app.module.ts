@@ -24,6 +24,13 @@ import { ShopPageComponent } from './pages/main-page/components/shop-page/shop-p
 import { AdminPageComponent } from './pages/main-page/components/admin-page/admin-page.component';
 import {CashbackService} from './services/cashback.service';
 import {MatTableModule} from '@angular/material/table';
+import { UpdateCashbackDialogComponent } from './pages/main-page/components/shop-page/update-cashback-dialog/update-cashback-dialog.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ClientService} from './services/client.service';
+import {MatTabsModule} from '@angular/material/tabs';
+import {ShopService} from './services/shop.service';
+import {UrlPermissionService} from './services/url-permission.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +39,8 @@ import {MatTableModule} from '@angular/material/table';
     MainPageComponent,
     ClientPageComponent,
     ShopPageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    UpdateCashbackDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +56,10 @@ import {MatTableModule} from '@angular/material/table';
     MatCardModule,
     MatIconModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [
     AuthService,
@@ -59,9 +70,15 @@ import {MatTableModule} from '@angular/material/table';
     },
     SnackBarService,
     MaterialIconsService,
-    CashbackService
+    CashbackService,
+    ClientService,
+    ShopService,
+    UrlPermissionService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    UpdateCashbackDialogComponent
+  ]
 })
 export class AppModule {
 }

@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validat
 import {AuthService} from '../../services/auth.service';
 import {SnackBarService} from '../../services/snack-bar.service';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {Client, Role} from '../../models/user.model';
+import {AuthResponseMessage, Client, Role} from '../../models/user.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Shop} from '../../models/shop.model';
 
@@ -54,11 +54,16 @@ export class LoginPageComponent implements OnInit {
       login: this.authForm.get('login').value.trim(),
       password: this.authForm.get('password').value.trim()
     };
-    this.authService.logIn(user).subscribe(() => {
-      console.log('go to main')
+    this.authService.logIn(user).subscribe((data: AuthResponseMessage) => {
+      console.log('go to main');
+      localStorage.setItem('cashback.access.token', data.accessToken as string);
+      localStorage.setItem('cashback.user.role', data.roles[0] as string);
+      localStorage.setItem('cashback.user.id', data.id.toString());
+      localStorage.setItem('cashback.user.login', data.login.toString());
       this.router.navigateByUrl('main');
     }, (error) => {
       this.isAuthenticationError = true;
+      this.errorHandler(error);
       console.log('Невозможно осуществить вход');
     });
   }
@@ -106,9 +111,6 @@ export class LoginPageComponent implements OnInit {
       case 400:
         this.isLoginAlreadyExists = true;
         break;
-      case 422:
-        this.snackBarService.openSnackBar('Ошибка валидации');
-        break;
       default:
         this.snackBarService.openSnackBar('Неизвестная ошибка ' + err.status);
     }
@@ -123,6 +125,6 @@ export class LoginPageComponent implements OnInit {
 // Error when invalid control is dirty or touched
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return !!(control && (control.dirty || control.touched));
+    return !!(control && !control.valid && (control.dirty || control.touched));
   }
 }

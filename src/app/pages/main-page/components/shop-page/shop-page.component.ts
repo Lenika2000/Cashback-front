@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CashbackChangeRequestPayload, CashbackForShop} from '../../../../models/cashback.model';
+import {CashbackService} from '../../../../services/cashback.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {UpdateCashbackDialogComponent} from './update-cashback-dialog/update-cashback-dialog.component';
 
 @Component({
   selector: 'app-shop-page',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopPageComponent implements OnInit {
 
-  constructor() { }
+  public cashback: CashbackForShop[] = [];
+  public displayedColumns: string[] = ['productName', 'productPrice', 'creationDate', 'status', 'isPaid', 'isOrderCompleted', 'confirmPayment',
+    'client', 'shopPayment', 'update'];
 
-  ngOnInit(): void {
+  constructor(private cashbackService: CashbackService,
+              private dialog: MatDialog) {
   }
 
+  ngOnInit(): void {
+    this.getCashback();
+  }
+
+  updateCashback(cashback: CashbackForShop): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.height = '450px';
+    dialogConfig.width = '450px';
+    dialogConfig.data = cashback;
+    this.dialog.open(UpdateCashbackDialogComponent, dialogConfig).componentInstance.cashbackUpdate.subscribe((updatedCashback: CashbackChangeRequestPayload) => {
+      this.cashbackService.updateCashback(updatedCashback).subscribe(() => {
+        this.getCashback();
+      }, error => {
+        console.log(error);
+      });
+    });
+  }
+
+  getCashback(): void {
+    this.cashbackService.getCashback('shops').subscribe((cashback: CashbackForShop[]) => {
+      this.cashback = cashback;
+    });
+  }
 }

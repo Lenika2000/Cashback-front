@@ -10,11 +10,11 @@ import {CashbackService} from '../../../../services/cashback.service';
 export class ClientPageComponent implements OnInit {
 
   public cashback: CashbackForClient[] = [];
-  public displayedColumns: string[] = ['productName', 'shopName', 'creationDate', 'status', 'cashbackSum'];
+  public displayedColumns: string[] = ['productName', 'productPrice', 'shopName', 'creationDate', 'status', 'cashbackSum'];
   constructor(private cashbackService: CashbackService) { }
 
   ngOnInit(): void {
-    this.cashbackService.getCashback().subscribe((cashback: CashbackForClient[]) => {
+    this.cashbackService.getCashback('clients').subscribe((cashback: CashbackForClient[]) => {
       this.cashback = cashback;
     });
   }

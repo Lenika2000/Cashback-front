@@ -19,12 +19,7 @@ export class AuthService {
   }
 
   public logIn(user: Client): Observable<any> {
-    return this.http.post(`${environment.basePath}/signin`, user)
-      .pipe(tap((data: AuthResponseMessage) => {
-        localStorage.setItem('cashback.access.token', data.accessToken as string);
-        localStorage.setItem('cashback.user.role', data.roles[0] as string);
-        localStorage.setItem('cashback.user.id', data.id.toString());
-      }));
+    return this.http.post(`${environment.basePath}/signin`, user);
   }
 
   public registerClient(client: Client): Observable<any> {

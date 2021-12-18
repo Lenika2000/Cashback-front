@@ -1,1 +1,117 @@
-<p>admin-page works!</p>
+<div class="admin-page">
+<mat-tab-group>
+  <mat-tab label="Кэшбеки">
+    <table mat-table [dataSource]="cashback"
+           class="mat-table-style">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="shopName">
+        <th mat-header-cell *matHeaderCellDef>Магазин</th>
+        <td mat-cell *matCellDef="let element">{{element.shopName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef>Наименование товара</th>
+        <td mat-cell *matCellDef="let element">{{element.productName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="productPrice">
+        <th mat-header-cell *matHeaderCellDef>Цена</th>
+        <td mat-cell *matCellDef="let element">{{element.productPrice}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef>Дата совершения покупки</th>
+        <td mat-cell *matCellDef="let element">{{element.creationDate.substring(0, 10)}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Статус</th>
+        <td mat-cell *matCellDef="let element">{{cashbackService.statusMap.get(element.status)}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isPaid">
+        <th mat-header-cell *matHeaderCellDef>Оплачен ли заказ клиентом?</th>
+        <td mat-cell *matCellDef="let element"><mat-icon>{{element.isPaid ? 'done' : 'clear'}}</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="isOrderCompleted">
+        <th mat-header-cell *matHeaderCellDef>Подтверждено отсутствие возврата товара?</th>
+        <td mat-cell *matCellDef="let element"><mat-icon>{{element.isOrderCompleted ? 'done' : 'clear'}}</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="confirmPayment">
+        <th mat-header-cell *matHeaderCellDef>Подтверждено ли получение средств системой кэшбека?</th>
+        <td mat-cell *matCellDef="let element"><mat-icon>{{element.confirmPayment ? 'done' : 'clear'}}</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef>Покупатель</th>
+        <td mat-cell *matCellDef="let element">{{element.clientLastName + ' ' + element.clientFirstName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="cashbackSum">
+        <th mat-header-cell *matHeaderCellDef>Начисленный кэшбек</th>
+        <td mat-cell *matCellDef="let element">{{element.cashbackSum}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="shopPayment">
+        <th mat-header-cell *matHeaderCellDef>Внесенные средства для выплаты кэшбека</th>
+        <td mat-cell *matCellDef="let element">{{element.shopPayment}}</td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="cashbackTableColumnName;"></tr>
+      <tr mat-row *matRowDef="let row; columns: cashbackTableColumnName;"></tr>
+    </table>
+  </mat-tab>
+  <mat-tab label="Клиенты">
+    <table mat-table [dataSource]="clients"
+           class="mat-table-style">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Имя</th>
+        <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Фамилия</th>
+        <td mat-cell *matCellDef="let element">{{element.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef>Баланс</th>
+        <td mat-cell *matCellDef="let element">{{element.balance}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="clientsTableColumnName;"></tr>
+      <tr mat-row *matRowDef="let row; columns: clientsTableColumnName;"></tr>
+    </table>
+  </mat-tab>
+  <mat-tab label="Магазины">
+    <table mat-table [dataSource]="shops"
+           class="mat-table-style">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Название</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'name'];"></tr>
+    </table>
+  </mat-tab>
+</mat-tab-group>
+</div>

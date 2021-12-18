@@ -66,10 +66,6 @@
         <mat-error *ngIf="shopForm.get('name').hasError('required')">
           Поле обязательно для заполнения
         </mat-error>
-        <mat-hint *ngIf="!isLoginPage && isLoginAlreadyExists  && shopForm.get('name').valid"
-                  class="form-container__auth-form_error">
-          Магазин с таким названием уже существует
-        </mat-hint>
       </mat-form-field>
     </form>
     <button mat-button *ngIf="isLoginPage" (click)="authenticate()" [disabled]="authForm.invalid"
@@ -80,7 +76,8 @@
             class="auth-page__go-to-registration-button cursor pointer">
       Зарегистрироваться!
     </button>
-    <button mat-button *ngIf="!isLoginPage" (click)="registration()" [disabled]="authForm.invalid"
+    <button mat-button *ngIf="!isLoginPage" (click)="registration()" [disabled]="authForm.invalid || (clientForm.invalid && selectedRole === 'ROLE_CLIENT')
+    || (shopForm.invalid && selectedRole === 'ROLE_SHOP')"
             class="auth-form__registration-button">
       Создать аккаунт
     </button>
