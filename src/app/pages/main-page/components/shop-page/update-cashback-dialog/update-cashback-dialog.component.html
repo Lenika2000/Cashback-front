@@ -5,7 +5,7 @@
     <mat-label>Название товара</mat-label>
     <input matInput formControlName="productName" readonly>
   </mat-form-field>
-  <label>Необходимо выплатить сумму: {{this.cashback.cashbackSum / 0.9}} pублей</label>
+  <label>Необходимо выплатить сумму: {{ (this.cashback.cashbackSum / 0.9) | number:2}} pублей</label>
   <mat-form-field style="margin: 16px 0 64px 0">
     <mat-label>Сумма для выплаты клиенту</mat-label>
     <input matInput formControlName="payment" [errorStateMatcher]="matcher">

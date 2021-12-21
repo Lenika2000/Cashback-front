@@ -1,10 +1,12 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ClientService} from '../../../../services/client.service';
 import {ShopService} from '../../../../services/shop.service';
 import {Client} from '../../../../models/user.model';
 import {Shop} from '../../../../models/shop.model';
 import {CashbackService} from '../../../../services/cashback.service';
 import {CashbackForAdmin} from '../../../../models/cashback.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-page',
@@ -15,11 +17,13 @@ export class AdminPageComponent implements OnInit, OnChanges {
 
   public clients: Client[] = [];
   public shops: Shop[] = [];
-  public cashback: any[] = [];
-  public clientsTableColumnName = ['id', 'firstName', 'lastName', 'balance'];
+  public clientsTableColumnName = ['id', 'login', 'firstName', 'lastName', 'balance'];
   public cashbackTableColumnName = ['id', 'shopName', 'productName', 'productPrice', 'creationDate', 'status', 'isPaid', 'isOrderCompleted', 'confirmPayment',
     'client', 'cashbackSum', 'shopPayment'];
   @Input() cashbackChange;
+
+  public cashbackDataSource: MatTableDataSource<CashbackForAdmin>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private clientService: ClientService, private shopService: ShopService, public cashbackService: CashbackService) {
   }
@@ -32,13 +36,15 @@ export class AdminPageComponent implements OnInit, OnChanges {
       this.shops = shops;
     });
     this.cashbackService.gelAllCashback().subscribe((cashback: CashbackForAdmin[]) => {
-      this.cashback = cashback;
+      this.cashbackDataSource = new MatTableDataSource<CashbackForAdmin>(cashback);
+      this.cashbackDataSource.paginator = this.paginator;
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.cashbackService.gelAllCashback().subscribe((cashback: CashbackForAdmin[]) => {
-      this.cashback = cashback;
+      this.cashbackDataSource = new MatTableDataSource<CashbackForAdmin>(cashback);
+      this.cashbackDataSource.paginator = this.paginator;
     });
     this.clientService.getClients().subscribe((clients: Client[]) => {
       this.clients = clients;

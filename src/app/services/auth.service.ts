@@ -19,17 +19,17 @@ export class AuthService {
   }
 
   public logIn(user: Client): Observable<any> {
-    return this.http.post(`${environment.basePath}/signin`, user);
+    return this.http.post(`${environment.basePath}api/signin`, user);
   }
 
   public registerClient(client: Client): Observable<any> {
     console.log(client);
-    return this.http.post(`${environment.basePath}/client/register`, client);
+    return this.http.post(`${environment.basePath}api/client/register`, client);
   }
 
   public registerShop(shop: Shop): Observable<any> {
     console.log(shop);
-    return this.http.post(`${environment.basePath}/shop/register`, shop);
+    return this.http.post(`${environment.basePath}api/shop/register`, shop);
   }
 
   public logOut(): void {

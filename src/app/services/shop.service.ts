@@ -13,7 +13,7 @@ export class ShopService {
   }
 
   public getShops(): Observable<any> {
-    return this.http.get(`${environment.basePath}/shops`);
+    return this.http.get(`${environment.basePath}api/shops`);
   }
 
 }

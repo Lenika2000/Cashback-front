@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CashbackForClient} from '../../../../models/cashback.model';
+import {CashbackForClient, CashbackForShop} from '../../../../models/cashback.model';
 import {CashbackService} from '../../../../services/cashback.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class ClientPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.cashbackService.getCashback('clients').subscribe((cashback: CashbackForClient[]) => {
-      this.cashback = cashback;
+      this.cashback = cashback.filter((cashbackForClient: CashbackForClient) => {
+        return cashbackForClient.shopName.length !== 0;
+      });
     });
   }
 

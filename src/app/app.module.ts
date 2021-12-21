@@ -31,6 +31,8 @@ import {ClientService} from './services/client.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ShopService} from './services/shop.service';
 import {UrlPermissionService} from './services/url-permission.service';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
+import {getRusPaginatorIntl} from './utils/rus-paginator-intl.util';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import {UrlPermissionService} from './services/url-permission.service';
     MatTableModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatPaginatorModule
   ],
   providers: [
     AuthService,
@@ -67,6 +70,9 @@ import {UrlPermissionService} from './services/url-permission.service';
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptorService,
       multi: true,
+    },
+    { provide: MatPaginatorIntl,
+      useValue: getRusPaginatorIntl()
     },
     SnackBarService,
     MaterialIconsService,

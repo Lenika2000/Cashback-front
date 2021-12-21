@@ -10,7 +10,7 @@ export interface Cashback {
 export type CashbackStatus = 'NEW' | 'RECEIVED_INF' | 'APPROVED' | 'REJECTED' | 'RECEIVED_SUM';
 
 export interface CashbackForClient extends Cashback{
-  shopName: number;
+  shopName: string;
 }
 
 export interface CashbackForShop extends Cashback{
@@ -30,5 +30,5 @@ export interface CashbackChangeRequestPayload {
 }
 
 export interface CashbackForAdmin extends CashbackForShop{
-  shopName: number;
+  shopName: string;
 }

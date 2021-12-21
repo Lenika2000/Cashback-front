@@ -14,11 +14,11 @@ export class ClientService {
 
   public getClientBalance(): Observable<any> {
     const userId = localStorage.getItem('cashback.user.id');
-    return this.http.get(`${environment.basePath}/clients/${userId}/balance`);
+    return this.http.get(`${environment.basePath}api/clients/${userId}/balance`);
   }
 
   public getClients(): Observable<any> {
-    return this.http.get(`${environment.basePath}/clients`);
+    return this.http.get(`${environment.basePath}api/clients`);
   }
 
 }

@@ -1,8 +1,8 @@
 <div class="admin-page">
 <mat-tab-group>
   <mat-tab label="Кэшбеки">
-    <table mat-table [dataSource]="cashback"
-           class="mat-table-style">
+    <table mat-table [dataSource]="cashbackDataSource"
+           class="mat-table-style cashback">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>id</th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
@@ -63,17 +63,22 @@
         <td mat-cell *matCellDef="let element">{{element.shopPayment}}</td>
       </ng-container>
 
-
       <tr mat-header-row *matHeaderRowDef="cashbackTableColumnName;"></tr>
-      <tr mat-row *matRowDef="let row; columns: cashbackTableColumnName;"></tr>
+      <tr mat-row  *matRowDef="let row; columns: cashbackTableColumnName;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[10, 15]" showFirstLastButtons></mat-paginator>
   </mat-tab>
   <mat-tab label="Клиенты">
     <table mat-table [dataSource]="clients"
-           class="mat-table-style">
+           class="mat-table-style clients">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>id</th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="login">
+        <th mat-header-cell *matHeaderCellDef>Логин</th>
+        <td mat-cell *matCellDef="let element">{{element.login}}</td>
       </ng-container>
 
       <ng-container matColumnDef="firstName">
@@ -97,11 +102,16 @@
   </mat-tab>
   <mat-tab label="Магазины">
     <table mat-table [dataSource]="shops"
-           class="mat-table-style">
+           class="mat-table-style shops">
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>id</th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="login">
+        <th mat-header-cell *matHeaderCellDef>Логин</th>
+        <td mat-cell *matCellDef="let element">{{element.login}}</td>
       </ng-container>
 
       <ng-container matColumnDef="name">
@@ -109,8 +119,8 @@
         <td mat-cell *matCellDef="let element">{{element.name}}</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['id', 'name'];"></tr>
+      <tr mat-header-row *matHeaderRowDef="['id', 'login', 'name']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'login', 'name'];"></tr>
     </table>
   </mat-tab>
 </mat-tab-group>

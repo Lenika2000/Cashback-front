@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CashbackChangeRequestPayload, CashbackForShop} from '../../../../models/cashback.model';
+import {CashbackChangeRequestPayload, CashbackForAdmin, CashbackForShop} from '../../../../models/cashback.model';
 import {CashbackService} from '../../../../services/cashback.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {UpdateCashbackDialogComponent} from './update-cashback-dialog/update-cashback-dialog.component';
@@ -39,7 +39,9 @@ export class ShopPageComponent implements OnInit {
 
   getCashback(): void {
     this.cashbackService.getCashback('shops').subscribe((cashback: CashbackForShop[]) => {
-      this.cashback = cashback;
+      this.cashback = cashback.filter((cashbackForShop: CashbackForShop) => {
+        return cashbackForShop.clientFirstName.length !== 0;
+      });
     });
   }
 }
